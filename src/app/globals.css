@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/* ── Designsystem ──────────────────────────────────────────────────
+   Farben, Schriften und Abstände an einer Stelle.                    */
+@theme {
+  --color-cream: #fbf8f4;
+  --color-sand: #f4ede4;
+  --color-beige: #e7dccd;
+  --color-line: #ddd0c0;
+  --color-taupe: #7b6d60;
+  --color-ink: #211d1a;
+  --color-ink-soft: #564c44;
+  --color-rose: #b98580;
+  --color-rose-deep: #9a625d;
+  --color-blush: #f3e4df;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-caveat), "Bradley Hand", cursive;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+::selection {
+  background: var(--color-blush);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rose-deep);
+  outline-offset: 3px;
+}
+
+/* ── Wiederkehrende Bausteine ─────────────────────────────────────── */
+
+@utility container-page {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-taupe);
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-ink);
+  cursor: pointer;
+  transition:
+    background-color 0.35s var(--ease-soft),
+    color 0.35s var(--ease-soft),
+    border-color 0.35s var(--ease-soft);
+}
+
+@utility btn-solid {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  &:hover {
+    background: var(--color-rose-deep);
+    border-color: var(--color-rose-deep);
+  }
+}
+
+@utility btn-outline {
+  background: transparent;
+  color: var(--color-ink);
+  &:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+}
+
+/* Dezente Lade-Animation im Hero (rein per CSS, damit das Bild sofort da ist) */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes unveil {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.9s var(--ease-soft) both;
+}
+
+@utility animate-unveil {
+  animation: unveil 1.3s var(--ease-soft) both;
+}
+
+dialog::backdrop {
+  background: rgb(33 29 26 / 0.9);
+  backdrop-filter: blur(6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
